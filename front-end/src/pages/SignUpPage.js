@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-export const LogInPage = () => {
+export const SignUpPage = () => {
 	const [errorMessage, setErrorMessage] = useState('');
 	const [emailValue, setEmailValue] = useState('');
 	const [passwordValue, setPasswordValue] = useState('');
+	const [confirmPasswordValue, setconfirmPasswordValue] = useState('');
 
 	const history = useHistory();
 
-	const onLogInClicked = async() => {
+	const onSignUpClicked = async() => {
 		alert('log in not implemented yet')
 	}
 
 	return (
 		<div className="content-container">
-			<h1>Log in</h1>
+			<h1>Sign Up</h1>
 			{errorMessage && <div className="fail">{errorMessage}</div>}
 			<input
 				value={emailValue}
@@ -25,12 +26,19 @@ export const LogInPage = () => {
 				value={passwordValue}
 				onchange={e => setPasswordValue(e.target.value)}
 				placeholder="password" />
-				<hr />
+			<input
+				type="password"
+				value={confirmPasswordValue}
+				onchange={e => setConfirmPasswordValue(e.target.value)}
+				placeholder="confirm password" />
+			<hr />
 			<button
-				disabled={!emailValue || !passwordValue}
-				onclick={onLogInClicked}>Log In </button>
-			<button onClick={() => history.push('/forgot-password')}>Forgot your password?</button>
-			<button onClick={() => history.push('/signup')}>Don't have an account? Sign Up</button>
+				disabled={
+					!emailValue || !passwordValue ||
+					passwordValue  !== confirmPasswordValue
+				}
+				onclick={onSignUpClicked}>sign Up</button>
+			<button onClick={() => history.push('/login')}>Already have an account? Log In</button>
 		</div>
 	)
 }
