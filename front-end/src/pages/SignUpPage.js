@@ -5,7 +5,7 @@ export const SignUpPage = () => {
 	const [errorMessage, setErrorMessage] = useState('');
 	const [emailValue, setEmailValue] = useState('');
 	const [passwordValue, setPasswordValue] = useState('');
-	const [confirmPasswordValue, setconfirmPasswordValue] = useState('');
+	const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
 
 	const history = useHistory();
 
