@@ -15,22 +15,18 @@ export const signUpRoute = {
 			res.sendStatus(409);
 		}
 
-		const passwordHash = await bcrypt.hash(password, bcrypt.genSaltSync(10), null, async (err, hash) => {
-			req.body.password = hash;
-			await console.log(hash);
+		await bcrypt.hash(password, bcrypt.genSaltSync(10), null, async (err, hash) => {
 			const result = await db.collection('users').insertOne({
 				email,
 				password: hash,
 				info: startingInfo,
 				isVerified: false,
 			});
+			const { insertedId } = result;
 			const startingInfo = {
 				hairColor: '',
 				favoriteFood: '',
-				bio: '',
 			};
-	
-			const { insertedId } = result;
 	
 			jwt.sign({
 				id: insertedId,
