@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { useToken } from '../auth/useToken';
 
 export const LogInPage = () => {
+	const [token, setToken] = useToken();
 	const [errorMessage, setErrorMessage] = useState('');
 	const [emailValue, setEmailValue] = useState('');
 	const [passwordValue, setPasswordValue] = useState('');
@@ -9,7 +12,13 @@ export const LogInPage = () => {
 	const history = useHistory();
 
 	const onLogInClicked = async() => {
-		alert('log in not implemented yet')
+		const response = await axios.post('/api/login', {
+			email: emailValue,
+			password: passwordValue,
+		});
+		const { token } = response.data;
+		setToken(token);
+		history.push('/')
 	}
 
 	return (
@@ -18,17 +27,17 @@ export const LogInPage = () => {
 			{errorMessage && <div className="fail">{errorMessage}</div>}
 			<input
 				value={emailValue}
-				onchange={e => setEmailValue(e.target.value)}
+				onChange={e => setEmailValue(e.target.value)}
 			 	placeholder="someone@gmail.com" />
 			<input
 				type="password"
 				value={passwordValue}
-				onchange={e => setPasswordValue(e.target.value)}
+				onChange={e => setPasswordValue(e.target.value)}
 				placeholder="password" />
 				<hr />
 			<button
 				disabled={!emailValue || !passwordValue}
-				onclick={onLogInClicked}>Log In </button>
+				onClick={onLogInClicked}>Log In </button>
 			<button onClick={() => history.push('/forgot-password')}>Forgot your password?</button>
 			<button onClick={() => history.push('/signup')}>Don't have an account? Sign Up</button>
 		</div>

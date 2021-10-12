@@ -25,7 +25,6 @@ export const  logInRoute = {
 				}
 				res.status(200).json({ token });
 			});
-			
 		} else {
 			res.sendStatus(401);
 		}
