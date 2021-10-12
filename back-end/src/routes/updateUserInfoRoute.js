@@ -45,6 +45,7 @@ export const updateUserInfoRoute = {
 					return res.status(200).json(err);
 				}
 				res.status(200).json({ token });
-			})
+			});
+		});
 	}
 }
